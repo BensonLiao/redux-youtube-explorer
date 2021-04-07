@@ -60,8 +60,8 @@ export function* fetchVideoList(keyword = 'surfing') {
   return result
 }
 
-export function* requestFetchVideo() {
-  const result = yield call(fetchVideoList)
+export function* requestFetchVideo(action) {
+  const result = yield call(fetchVideoList, action.payload)
   console.log('result', result)
 }
 

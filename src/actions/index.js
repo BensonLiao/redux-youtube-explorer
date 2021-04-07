@@ -1,5 +1,5 @@
 const REQUEST_SEARCH_VIDEO = 'REQUEST_SEARCH_VIDEO'
-const requestSearchVideo = ({ keyword }) => ({
+const requestSearchVideo = keyword => ({
   type: REQUEST_SEARCH_VIDEO,
   payload: keyword
 })
