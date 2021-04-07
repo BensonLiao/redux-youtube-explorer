@@ -1,0 +1,68 @@
+{
+  "name": "redux-youtube-explorer",
+  "description": "An youtube video explorer done with react, redux",
+  "version": "1.0.0",
+  "engines": {
+    "node": "12.12.0"
+  },
+  "author": {
+    "name": "Benson Liao",
+    "url": "https://github.com/BensonLiao"
+  },
+  "private": false,
+  "//homepage-note": "You can set '.' for serving the same build from different paths if you are not using the HTML5 pushState history API nor using client-side routing. Otherwise set it to 'https://yourusername.github.io/repository-name'.",
+  "homepage": ".",
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
+    "core-js": "^3.1.4",
+    "cssesc": "^3.0.0",
+    "immer": "^8.0.1",
+    "normalizr": "^3.4.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-scripts": "^4.0.2",
+    "react-tooltip": "^3.10.0",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.0.5",
+    "regenerator-runtime": "^0.13.3",
+    "source-map-explorer": "^2.0.1",
+    "styled-components": "^4.3.2",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.2",
+    "prettier": "^1.18.2",
+    "react-test-renderer": "^16.8.6",
+    "redux-devtools-extension": "^2.13.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "deploy": "gh-pages -d build",
+    "deploy-dev": "gh-pages -d build -o dev",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "eslint --debug ."
+  },
+  "storybook-deployer": {
+    "gitUsername": "Benson Liao",
+    "gitEmail": "skylock777@gmail.com",
+    "commitMessage": "Deploy Storybook [skip ci]"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
