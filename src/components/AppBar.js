@@ -6,7 +6,7 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = makeStyles((theme) => ({
-  grow: {
+  root: {
     flexGrow: 1,
   },
   search: {
@@ -52,8 +52,8 @@ const inputRef = React.createRef();
 export default function PrimarySearchAppBar({searchVideo}) {
   const classes = useStyles();
   return (
-    <div className={classes.grow}>
-      <AppBar position="static">
+    <div className={classes.root}>
+      <AppBar position="fixed">
         <Toolbar>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

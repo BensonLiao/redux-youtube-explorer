@@ -8,6 +8,15 @@ import VideoList from '../containers/VideoList'
 const GlobalStyle = createGlobalStyle`
   body {
     background: ${cssConst.desktopBackgroundGray};
+    overflow: hidden;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE and Edge */
+    -ms-overflow-style: none;
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: none;
   }
 `
 

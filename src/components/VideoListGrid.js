@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
 import GridList from '@material-ui/core/GridList'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  root: theme.mixins.toolbar,
   gridList: {
     width: '100vw',
     height: '100vh',
@@ -16,27 +17,31 @@ const useStyles = makeStyles(() => ({
 function VideoListGrid({items, width}) {
   console.log('items', items)
   const classes = useStyles();
-  return items && items.length > 0 ? (
-    <GridList 
-      className={classes.gridList}
-      cols={width === 'xs' ? 2 : (width === 'sm' ? 3 : 4)}
-      spacing={16}
-      style={{margin: 0}}
-    >
-      {items.map((item) => {
-        return (
-          <img
-            key={item.id.videoId || item.id.channelId}
-            src={item.snippet.thumbnails.medium.url}
-            width={item.snippet.thumbnails.medium.width}
-            height={item.snippet.thumbnails.medium.height}
-            alt={item.snippet.title}
-          />
-        )
-      })}
-    </GridList>
-  ) : (
-    <div></div>
+  return (
+    <div className={classes.root}>
+      {items && items.length > 0 ? (
+        <GridList 
+          className={classes.gridList}
+          cols={width === 'xs' ? 2 : (width === 'sm' ? 3 : 4)}
+          spacing={16}
+          style={{marginTop: '72px'}}
+        >
+          {items.map((item) => {
+            return (
+              <img
+                key={item.id.videoId || item.id.channelId}
+                src={item.snippet.thumbnails.medium.url}
+                width={item.snippet.thumbnails.medium.width}
+                height={item.snippet.thumbnails.medium.height}
+                alt={item.snippet.title}
+              />
+            )
+          })}
+        </GridList>
+      ) : (
+        <div></div>
+      )}
+    </div>
   );
 }
 
