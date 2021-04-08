@@ -68,8 +68,11 @@ export default function PrimarySearchAppBar({searchVideo}) {
               inputProps={{ 'aria-label': 'search' }}
               ref={inputRef}
               onKeyDown={event => {
-                if (event.key === 'Enter' && inputRef.current) {
-                  console.log('inputRef.current.firstChild.value', inputRef.current.firstChild.value)
+                if (
+                  !event.nativeEvent.isComposing && 
+                  event.key === 'Enter' &&
+                  inputRef.current
+                ) {
                   searchVideo(inputRef.current.firstChild.value)
                 }
               }}
