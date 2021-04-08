@@ -8,7 +8,7 @@ import VideoList from '../containers/VideoList'
 const GlobalStyle = createGlobalStyle`
   body {
     background: ${cssConst.desktopBackgroundGray};
-    overflow: hidden;
+    overflow-x: hidden;
     /* Hide scrollbar for Chrome, Safari and Opera */
     ::-webkit-scrollbar {
       display: none;
