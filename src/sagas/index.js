@@ -1,6 +1,6 @@
-import { call, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import axios from 'axios'
-import { REQUEST_SEARCH_VIDEO } from '../actions'
+import { REQUEST_SEARCH_VIDEO, loadData } from '../actions'
 
 const REACT_APP_GAPI_KEY = process.env.REACT_APP_GAPI_KEY
 
@@ -62,7 +62,7 @@ export function* fetchVideoList(keyword = 'surfing') {
 
 export function* requestFetchVideo(action) {
   const result = yield call(fetchVideoList, action.payload)
-  console.log('result', result)
+  yield put(loadData(result))
 }
 
 export default function* watchActions() {

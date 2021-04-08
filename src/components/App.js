@@ -1,8 +1,9 @@
-import React, { lazy } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
-import { theme, cssConst, displayFlex, alignCenter } from '../styles'
+import { theme, cssConst } from '../styles'
 import AppBar from '../containers/AppBar'
+import VideoList from '../containers/VideoList'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -11,17 +12,17 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const Root = styled.div`
-  ${displayFlex}
-  ${alignCenter}
+  width: 100vw;
+  margin: auto;
 `
 
-const App = ({ videoList }) => {
-  console.log('videoList', videoList)
+const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Root>
         <GlobalStyle />
         <AppBar/>
+        <VideoList/>
       </Root>
     </ThemeProvider>
   )

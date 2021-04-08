@@ -15,9 +15,9 @@ const requestLoadData = () => ({
   }
 })
 
-const loadData = ({ entities }) => ({
+const loadData = (result) => ({
   type: LOAD_DATA,
-  payload: entities
+  payload: result
 })
 
 module.exports = {
