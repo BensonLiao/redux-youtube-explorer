@@ -29,8 +29,22 @@ const allVideos = produce((draft, action) => {
   }
 }, { items: [], isFetching: false })
 
+const pageInfo = produce((draft, action) => {
+  switch (action.type) {
+    case LOAD_DATA:
+      const {
+        payload: { nextPageToken, pageInfo }
+      } = action
+      draft.nextPageToken = nextPageToken
+      draft.pageInfo = pageInfo
+      break
+    default:
+  }
+}, { nextPageToken: null, pageInfo: {} })
+
 const videoListReducer = combineReducers({
-  allVideos
+  allVideos,
+  pageInfo
 })
 
 export default videoListReducer

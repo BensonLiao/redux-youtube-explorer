@@ -4,6 +4,7 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { theme, cssConst } from '../styles'
 import AppBar from '../containers/AppBar'
 import VideoList from '../containers/VideoList'
+import Pagination from '../containers/Pagination'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -32,6 +33,7 @@ const App = () => {
         <GlobalStyle />
         <AppBar/>
         <VideoList/>
+        <Pagination/>
       </Root>
     </ThemeProvider>
   )
