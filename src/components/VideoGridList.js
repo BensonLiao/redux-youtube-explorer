@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     gridGap: theme.spacing(2),
     marginTop: '72px'
   },
+  videoItem: {
+    display: 'block'
+  }
 }));
 
 
@@ -31,17 +34,21 @@ function VideoGridList({items, width}) {
         >
           {items.map((item) => {
             return (
-              <a
-                key={item.id.videoId}
-                href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
-              >
-                <img
-                  src={item.snippet.thumbnails.medium.url}
-                  width={item.snippet.thumbnails.medium.width}
-                  height={item.snippet.thumbnails.medium.height}
-                  alt={item.snippet.title}
-                />
-              </a>
+              <div key={item.id.videoId} className={classes.videoItem}>
+                <a
+                  href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
+                >
+                  <img
+                    src={item.snippet.thumbnails.medium.url}
+                    width={item.snippet.thumbnails.medium.width}
+                    height={item.snippet.thumbnails.medium.height}
+                    alt={item.snippet.title}
+                  />
+                </a>
+                <span>
+                  {item.snippet.title}
+                </span>
+              </div>
             )
           })}
         </div>
