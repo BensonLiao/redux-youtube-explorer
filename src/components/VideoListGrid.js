@@ -15,14 +15,13 @@ const useStyles = makeStyles((theme) => ({
 
 
 function VideoListGrid({items, width}) {
-  console.log('items', items)
   const classes = useStyles();
   return (
     <div className={classes.root}>
       {items && items.length > 0 ? (
         <GridList 
           className={classes.gridList}
-          cols={width === 'xs' ? 2 : (width === 'sm' ? 3 : 4)}
+          cols={width === 'xs' ? 2 : (width === 'sm' ? 3 : (width === 'md' ? 4 : 5))}
           spacing={16}
           style={{marginTop: '72px'}}
         >
