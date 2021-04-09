@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function VideoGridList({items, width}) {
   const classes = useStyles();
   const cols = width === 'xs' ? 1 : (width === 'sm' ? 2 : (width === 'md' ? 3 : 4));
@@ -45,9 +44,7 @@ function VideoGridList({items, width}) {
                     alt={item.snippet.title}
                   />
                 </a>
-                <span>
-                  {item.snippet.title}
-                </span>
+                <span dangerouslySetInnerHTML={{__html: item.snippet.title}}/>
               </div>
             )
           })}
