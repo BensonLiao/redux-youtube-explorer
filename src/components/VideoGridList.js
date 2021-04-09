@@ -25,7 +25,8 @@ function VideoGridList({items, width}) {
         <div 
           className={classes.gridList}
           style={{
-            gridTemplateColumns: `repeat(${cols}, 320px)`
+            gridTemplateColumns: `repeat(${cols}, 
+              ${items[0].snippet.thumbnails.medium.width}px)`
           }}
         >
           {items.map((item) => {
