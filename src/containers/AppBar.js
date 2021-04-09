@@ -3,7 +3,7 @@ import { requestSearchVideo } from '../actions'
 import AppBar from '../components/AppBar'
 
 const mapDispatchToProps = (dispatch) => ({
-  searchVideo: keyword => dispatch(requestSearchVideo(keyword))
+  searchVideo: keyword => dispatch(requestSearchVideo({keyword}))
 })
 
 export default connect(

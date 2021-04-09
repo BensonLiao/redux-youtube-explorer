@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getVideoListPageInfo } from '../reducers/selector'
+import { requestSearchVideo } from '../actions'
 import Pagination from '../components/Pagination'
 
 const mapStateToProps = (state) => {
@@ -8,6 +9,12 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  searchVideo: (keyword, pageToken) =>
+    dispatch(requestSearchVideo({keyword, pageToken}))
+})
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Pagination)

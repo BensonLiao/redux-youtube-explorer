@@ -7,6 +7,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { usePagination } from '@material-ui/lab/Pagination';
 
+import { keywordInputRef } from './AppBar';
+
 const useStyles = makeStyles(() => ({
   root: {
     marginTop: '16px',
@@ -39,7 +41,8 @@ export default function VideoListPagination({
   pageInfo: {
     totalResults,
     resultsPerPage
-  }
+  },
+  searchVideo
 }) {
   const pageCount = Math.ceil(totalResults / resultsPerPage)
   const { items } = usePagination({
@@ -51,12 +54,14 @@ export default function VideoListPagination({
     <div className={classes.root}>
       <ul className={classes.ul}>
         {pageCount > 0 && items.map(({ page, type, selected, ...item }, index) => {
+          let onClick = null;
           let children = null;
           if (type === 'start-ellipsis' || type === 'end-ellipsis') {
             children = '…';
           }
           
           if (type === 'page') {
+            onClick = item.onClick;
             item.disabled = page !== currentPageNumber &&
               page !== currentPageNumber - 1 &&
               page !== currentPageNumber + 1;
@@ -65,6 +70,7 @@ export default function VideoListPagination({
                 className={classes.btn}
                 selected={selected}
                 style={{ fontWeight: selected ? 'bold' : undefined }}
+                value={page}
                 {...item}
               >
                 {page}
@@ -73,7 +79,15 @@ export default function VideoListPagination({
           }
 
           if (type === 'next') {
+            onClick = item.onClick;
             item.disabled = !nextPageToken;
+            item.onClick = () => {
+              onClick();
+              searchVideo(
+                keywordInputRef.current.firstChild.value,
+                nextPageToken
+              );
+            };
             children = (
               <IconButton
                 className={classes.btn}
@@ -105,5 +119,6 @@ VideoListPagination.propTypes = {
   pageInfo: PropTypes.shape({
     totalResults: PropTypes.number,
     resultsPerPage: PropTypes.number
-  })
+  }),
+  searchVideo: PropTypes.func.isRequired
 }

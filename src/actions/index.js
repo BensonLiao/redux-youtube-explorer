@@ -1,7 +1,12 @@
 const REQUEST_SEARCH_VIDEO = 'REQUEST_SEARCH_VIDEO'
-const requestSearchVideo = keyword => ({
+
+const requestSearchVideo = ({keyword, pageToken, ...queryParams}) => ({
   type: REQUEST_SEARCH_VIDEO,
-  payload: keyword
+  payload: {
+    keyword,
+    pageToken,
+    ...queryParams
+  }
 })
 
 
@@ -20,7 +25,7 @@ const loadData = (result) => ({
   payload: result
 })
 
-module.exports = {
+export {
   REQUEST_SEARCH_VIDEO,
   requestSearchVideo,
   REQUEST_LODA_DATA,

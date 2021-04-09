@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const inputRef = React.createRef();
+export const keywordInputRef = React.createRef();
 
 export default function PrimarySearchAppBar({searchVideo}) {
   const classes = useStyles();
@@ -67,14 +67,14 @@ export default function PrimarySearchAppBar({searchVideo}) {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              ref={inputRef}
+              ref={keywordInputRef}
               onKeyDown={event => {
                 if (
                   !event.nativeEvent.isComposing && 
                   event.key === 'Enter' &&
-                  inputRef.current
+                  keywordInputRef.current
                 ) {
-                  searchVideo(inputRef.current.firstChild.value)
+                  searchVideo(keywordInputRef.current.firstChild.value)
                 }
               }}
             />
