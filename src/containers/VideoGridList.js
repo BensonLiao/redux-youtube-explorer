@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getVideoList } from '../reducers/selector'
-import VideoListGrid from '../components/VideoListGrid'
+import VideoGridList from '../components/VideoGridList'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,4 +10,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(VideoListGrid)
+)(VideoGridList)

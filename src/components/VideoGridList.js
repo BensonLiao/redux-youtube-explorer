@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function VideoListGrid({items, width}) {
+function VideoGridList({items, width}) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -44,7 +44,7 @@ function VideoListGrid({items, width}) {
   );
 }
 
-VideoListGrid.propTypes = {
+VideoGridList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     kind: PropTypes.string,
     etag: PropTypes.string,
@@ -81,4 +81,4 @@ VideoListGrid.propTypes = {
   }))
 }
 
-export default withWidth()(VideoListGrid)
+export default withWidth()(VideoGridList)

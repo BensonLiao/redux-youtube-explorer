@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
 import { theme, cssConst } from '../styles'
 import AppBar from '../containers/AppBar'
-import VideoList from '../containers/VideoList'
+import VideoGridList from '../containers/VideoGridList'
 import Pagination from '../containers/Pagination'
 
 const GlobalStyle = createGlobalStyle`
@@ -32,7 +32,7 @@ const App = () => {
       <Root>
         <GlobalStyle />
         <AppBar/>
-        <VideoList/>
+        <VideoGridList/>
         <Pagination/>
       </Root>
     </ThemeProvider>
