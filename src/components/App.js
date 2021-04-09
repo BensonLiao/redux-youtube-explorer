@@ -42,6 +42,7 @@ const App = () => {
 App.propTypes = {
   videoList: PropTypes.shape({
     nextPageToken: PropTypes.string,
+    prevPageToken: PropTypes.string,
     pageInfo: PropTypes.shape({
       totalResults: PropTypes.number,
       resultsPerPage: PropTypes.number

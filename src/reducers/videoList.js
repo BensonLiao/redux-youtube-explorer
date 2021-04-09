@@ -33,14 +33,15 @@ const pageInfo = produce((draft, action) => {
   switch (action.type) {
     case LOAD_DATA:
       const {
-        payload: { nextPageToken, pageInfo }
+        payload: { nextPageToken, prevPageToken, pageInfo }
       } = action
       draft.nextPageToken = nextPageToken
+      draft.prevPageToken = prevPageToken
       draft.pageInfo = pageInfo
       break
     default:
   }
-}, { nextPageToken: null, pageInfo: {} })
+}, { nextPageToken: null, prevPageToken: null, pageInfo: {} })
 
 const videoListReducer = combineReducers({
   allVideos,

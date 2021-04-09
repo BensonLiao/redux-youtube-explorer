@@ -38,6 +38,7 @@ const useStyles = makeStyles(() => ({
 
 export default function VideoListPagination({
   nextPageToken,
+  prevPageToken,
   pageInfo: {
     totalResults,
     resultsPerPage
@@ -89,17 +90,22 @@ export default function VideoListPagination({
               );
             };
             children = (
-              <IconButton
-                className={classes.btn}
-                disabled={!nextPageToken}
-                {...item}
-              >
+              <IconButton className={classes.btn} {...item}>
                 <NavigateNextIcon/>
               </IconButton>
             );
           }
 
           if (type === 'previous') {
+            onClick = item.onClick;
+            item.disabled = !prevPageToken;
+            item.onClick = () => {
+              onClick();
+              searchVideo(
+                keywordInputRef.current.firstChild.value,
+                prevPageToken
+              );
+            };
             children = (
               <IconButton className={classes.btn} {...item}>
                 <NavigateBeforeIcon/>
@@ -116,6 +122,7 @@ export default function VideoListPagination({
 
 VideoListPagination.propTypes = {
   nextPageToken: PropTypes.string,
+  prevPageToken: PropTypes.string,
   pageInfo: PropTypes.shape({
     totalResults: PropTypes.number,
     resultsPerPage: PropTypes.number
