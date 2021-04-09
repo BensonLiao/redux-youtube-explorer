@@ -30,9 +30,11 @@ function VideoGridList({items, width}) {
         >
           {items.map((item) => {
             return (
-              <a href={`https://www.youtube.com/watch?v=${item.id.videoId}`}>
+              <a
+                key={item.id.videoId}
+                href={`https://www.youtube.com/watch?v=${item.id.videoId}`}
+              >
                 <img
-                  key={item.id.videoId || item.id.channelId}
                   src={item.snippet.thumbnails.medium.url}
                   width={item.snippet.thumbnails.medium.width}
                   height={item.snippet.thumbnails.medium.height}
