@@ -63,9 +63,18 @@ export default function VideoListPagination({
           
           if (type === 'page') {
             onClick = item.onClick;
-            item.disabled = page !== currentPageNumber &&
+            item.disabled = !selected &&
               page !== currentPageNumber - 1 &&
               page !== currentPageNumber + 1;
+            item.onClick = () => {
+              onClick();
+              if (!selected) {
+                searchVideo(
+                  keywordInputRef.current.firstChild.value,
+                  page === currentPageNumber + 1 ? nextPageToken : prevPageToken
+                );
+              }
+            };
             children = (
               <ToggleButton
                 className={classes.btn}
