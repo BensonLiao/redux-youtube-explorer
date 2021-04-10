@@ -1,8 +1,11 @@
 import { call, put, take, takeLatest } from 'redux-saga/effects'
 import { REHYDRATE } from 'redux-persist/lib/constants';
 import axios from 'axios'
-import { REQUEST_SEARCH_VIDEO, loadData } from '../actions'
 
+import { getPersistor } from '../configureStore'
+import { REQUEST_SEARCH_VIDEO, loadData, changeToPage } from '../actions'
+
+const persistor = getPersistor()
 const REACT_APP_GAPI_KEY = process.env.REACT_APP_GAPI_KEY
 
 // Example response
@@ -53,11 +56,18 @@ const REACT_APP_GAPI_KEY = process.env.REACT_APP_GAPI_KEY
 //   ]
 // }
 
-export function* fetchVideoList({keyword = 'surfing', pageToken = null}) {
+export function* fetchVideoList({
+  keyword = 'surfing',
+  page = 1,
+  pageToken = null
+}) {
   const result = yield axios
     .get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=${keyword}${pageToken ? `&pageToken=${pageToken}` : ''}&key=${REACT_APP_GAPI_KEY}`)
     .then(response => response.data)
     .catch(err => console.log('A fetch err occurs: ', err))
+  if (result && result.items.length > 0) {
+    result.page = page
+  }
   return result
 }
 
@@ -67,6 +77,6 @@ export function* requestFetchVideo(action) {
 }
 
 export default function* watchActions() {
-  yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
+  // yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
   yield takeLatest(REQUEST_SEARCH_VIDEO, requestFetchVideo)
 }

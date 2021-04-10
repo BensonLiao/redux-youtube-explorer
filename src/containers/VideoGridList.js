@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { getVideoList } from '../reducers/selector'
+import { getCurrentPage, getVideoListByPage } from '../reducers/selector'
 import VideoGridList from '../components/VideoGridList'
 
 const mapStateToProps = (state) => {
   return {
-    items: getVideoList(state)
+    items: getVideoListByPage(state, getCurrentPage(state))
   }
 }
 

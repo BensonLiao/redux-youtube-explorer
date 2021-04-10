@@ -43,13 +43,15 @@ export default function VideoListPagination({
     totalResults,
     resultsPerPage
   },
-  searchVideo
+  currentPageNumber,
+  allVideoList,
+  searchVideo,
+  changeToPage
 }) {
   const pageCount = Math.ceil(totalResults / resultsPerPage)
   const { items } = usePagination({
     count: pageCount,
   });
-  const currentPageNumber = items.filter(({selected}) => selected === true)[0]?.page
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -62,24 +64,31 @@ export default function VideoListPagination({
           }
           
           if (type === 'page') {
+            const isSelected = currentPageNumber === page;
             onClick = item.onClick;
-            item.disabled = !selected &&
+            item.disabled = !isSelected &&
               page !== currentPageNumber - 1 &&
               page !== currentPageNumber + 1;
             item.onClick = () => {
               onClick();
-              if (!selected) {
+              if (isSelected) {
+                return;
+              }
+              if (!allVideoList[page]) {
                 searchVideo(
                   keywordInputRef.current.firstChild.value,
+                  page,
                   page === currentPageNumber + 1 ? nextPageToken : prevPageToken
                 );
+              } else {
+                changeToPage(page)
               }
             };
             children = (
               <ToggleButton
                 className={classes.btn}
-                selected={selected}
-                style={{ fontWeight: selected ? 'bold' : undefined }}
+                selected={isSelected}
+                style={{ fontWeight: isSelected ? 'bold' : undefined }}
                 value={page}
                 {...item}
               >
@@ -93,10 +102,15 @@ export default function VideoListPagination({
             item.disabled = !nextPageToken;
             item.onClick = () => {
               onClick();
-              searchVideo(
-                keywordInputRef.current.firstChild.value,
-                nextPageToken
-              );
+              if (!allVideoList[currentPageNumber + 1]) {
+                searchVideo(
+                  keywordInputRef.current.firstChild.value,
+                  currentPageNumber + 1,
+                  nextPageToken
+                );
+              } else {
+                changeToPage(currentPageNumber + 1)
+              }
             };
             children = (
               <IconButton className={classes.btn} {...item}>
@@ -110,10 +124,15 @@ export default function VideoListPagination({
             item.disabled = !prevPageToken;
             item.onClick = () => {
               onClick();
-              searchVideo(
-                keywordInputRef.current.firstChild.value,
-                prevPageToken
-              );
+              if (!allVideoList[currentPageNumber - 1]) {
+                searchVideo(
+                  keywordInputRef.current.firstChild.value,
+                  currentPageNumber - 1,
+                  nextPageToken
+                );
+              } else {
+                changeToPage(currentPageNumber - 1)
+              }
             };
             children = (
               <IconButton className={classes.btn} {...item}>
@@ -136,5 +155,7 @@ VideoListPagination.propTypes = {
     totalResults: PropTypes.number,
     resultsPerPage: PropTypes.number
   }),
+  allVideoList: PropTypes.object,
+  currentPageNumber: PropTypes.number,
   searchVideo: PropTypes.func.isRequired
 }

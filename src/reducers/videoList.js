@@ -1,13 +1,14 @@
 import produce from 'immer'
 import { combineReducers } from 'redux'
-import { REQUEST_LODA_DATA, LOAD_DATA } from '../actions'
+import { CHANGE_TO_PAGE, REQUEST_LODA_DATA, LOAD_DATA } from '../actions'
 
 const loadVideos = (draft, action) => {
   const {
     type,
-    payload: { items }
+    payload: { page, items }
   } = action
-  draft.items = items
+  draft.pageItems[page] = items
+  draft.currentPage = page
   switch (type) {
     case REQUEST_LODA_DATA:
       draft.isFetching = true
@@ -21,13 +22,19 @@ const loadVideos = (draft, action) => {
 
 const allVideos = produce((draft, action) => {
   switch (action.type) {
+    case CHANGE_TO_PAGE:
+      const {
+        payload: { page }
+      } = action
+      draft.currentPage = page
+      break
     case REQUEST_LODA_DATA:
     case LOAD_DATA:
       loadVideos(draft, action)
       break
     default:
   }
-}, { items: [], isFetching: false })
+}, { pageItems: {0: []}, currentPage: 0, isFetching: false })
 
 const pageInfo = produce((draft, action) => {
   switch (action.type) {
