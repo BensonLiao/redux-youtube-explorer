@@ -1,4 +1,5 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
+import { call, put, take, takeLatest } from 'redux-saga/effects'
+import { REHYDRATE } from 'redux-persist/lib/constants';
 import axios from 'axios'
 import { REQUEST_SEARCH_VIDEO, loadData } from '../actions'
 
@@ -66,5 +67,6 @@ export function* requestFetchVideo(action) {
 }
 
 export default function* watchActions() {
+  yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
   yield takeLatest(REQUEST_SEARCH_VIDEO, requestFetchVideo)
 }
