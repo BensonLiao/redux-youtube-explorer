@@ -1,20 +1,17 @@
 # An youtube video explorer done with react, redux
 
-# WIP
-## How does it work:
-# Demo
 # Run at local
 
 Clone and install dependencies
 
 ```
-yarn install
+npm install
 ```
 
 Run project
 
 ```
-yarn start
+npm start
 ```
 
 then you can access [http://localhost:3000](http://localhost:3000)
