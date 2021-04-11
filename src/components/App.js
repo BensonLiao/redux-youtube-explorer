@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
-import { theme, cssConst } from '../styles'
+import styled, { createGlobalStyle } from 'styled-components'
 import AppBar from '../containers/AppBar'
 import VideoGridList from '../containers/VideoGridList'
 import Pagination from '../containers/Pagination'
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background: ${cssConst.desktopBackgroundGray};
+    background: lightgray;
     overflow-x: hidden;
     /* Hide scrollbar for Chrome, Safari and Opera */
     ::-webkit-scrollbar {
@@ -28,14 +27,12 @@ const Root = styled.div`
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Root>
-        <GlobalStyle />
-        <AppBar/>
-        <VideoGridList/>
-        <Pagination/>
-      </Root>
-    </ThemeProvider>
+    <Root>
+      <GlobalStyle />
+      <AppBar/>
+      <VideoGridList/>
+      <Pagination/>
+    </Root>
   )
 }
 
