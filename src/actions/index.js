@@ -1,4 +1,8 @@
 const CHANGE_TO_PAGE = 'CHANGE_TO_PAGE'
+const REQUEST_SEARCH_VIDEO = 'REQUEST_SEARCH_VIDEO'
+const REQUEST_LODA_DATA = 'REQUEST_LODA_DATA'
+const LOAD_DATA = 'LOAD_DATA'
+const CLEAR_DATA = 'CLEAR_DATA'
 
 const changeToPage = ({page}) => ({
   type: CHANGE_TO_PAGE,
@@ -6,8 +10,6 @@ const changeToPage = ({page}) => ({
     page
   }
 })
-
-const REQUEST_SEARCH_VIDEO = 'REQUEST_SEARCH_VIDEO'
 
 const requestSearchVideo = ({
   keyword,
@@ -24,8 +26,6 @@ const requestSearchVideo = ({
   }
 })
 
-const REQUEST_LODA_DATA = 'REQUEST_LODA_DATA'
-const LOAD_DATA = 'LOAD_DATA'
 
 const requestLoadData = () => ({
   type: REQUEST_LODA_DATA,
@@ -39,13 +39,20 @@ const loadData = (result) => ({
   payload: result
 })
 
+const clearData = () => ({
+  type: CLEAR_DATA,
+  payload: {}
+})
+
 export {
   CHANGE_TO_PAGE,
-  changeToPage,
   REQUEST_SEARCH_VIDEO,
-  requestSearchVideo,
   REQUEST_LODA_DATA,
   LOAD_DATA,
+  CLEAR_DATA,
+  changeToPage,
+  requestSearchVideo,
   requestLoadData,
-  loadData
+  loadData,
+  clearData
 }

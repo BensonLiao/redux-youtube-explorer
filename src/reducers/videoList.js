@@ -1,6 +1,11 @@
 import produce from 'immer'
 import { combineReducers } from 'redux'
-import { CHANGE_TO_PAGE, REQUEST_LODA_DATA, LOAD_DATA } from '../actions'
+import {
+  CHANGE_TO_PAGE,
+  REQUEST_LODA_DATA,
+  LOAD_DATA,
+  CLEAR_DATA
+} from '../actions'
 
 const loadVideos = (draft, action) => {
   const {
@@ -22,6 +27,9 @@ const loadVideos = (draft, action) => {
 
 const allVideos = produce((draft, action) => {
   switch (action.type) {
+    case CLEAR_DATA:
+      draft = action.payload
+      break
     case CHANGE_TO_PAGE:
       const {
         payload: { page }
@@ -38,6 +46,9 @@ const allVideos = produce((draft, action) => {
 
 const pageInfo = produce((draft, action) => {
   switch (action.type) {
+    case CLEAR_DATA:
+      draft = action.payload
+      break
     case LOAD_DATA:
       const {
         payload: { nextPageToken, prevPageToken, pageInfo }

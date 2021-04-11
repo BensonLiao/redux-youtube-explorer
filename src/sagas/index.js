@@ -1,9 +1,8 @@
-import { call, put, take, takeLatest } from 'redux-saga/effects'
-import { REHYDRATE } from 'redux-persist/lib/constants';
+import { call, put, all, takeLatest } from 'redux-saga/effects'
 import axios from 'axios'
 
 import { getPersistor } from '../configureStore'
-import { REQUEST_SEARCH_VIDEO, loadData, changeToPage } from '../actions'
+import { REQUEST_SEARCH_VIDEO, loadData, clearData } from '../actions'
 
 const persistor = getPersistor()
 const REACT_APP_GAPI_KEY = process.env.REACT_APP_GAPI_KEY
@@ -77,6 +76,7 @@ export function* requestFetchVideo(action) {
 }
 
 export default function* watchActions() {
-  // yield take(REHYDRATE); // Wait for rehydrate to prevent sagas from running with empty store
+  // We can run purge then a data clear action
+  // yield all([call(persistor.purge), put(clearData())])
   yield takeLatest(REQUEST_SEARCH_VIDEO, requestFetchVideo)
 }

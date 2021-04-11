@@ -8,9 +8,15 @@ import rootSaga from './sagas'
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  // We can also purge storage on write item fail
+  // writeFailHandler: () => {
+  //   getPersistor().purge()
+  // }
 }
 
+// We have to seperate persist reducer,
+// if we need control on partial state to do clear/rehydrate with like FIFO algo
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 let persistor
