@@ -1,40 +1,42 @@
 import { createStore, applyMiddleware } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import throttle from 'lodash/throttle'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
+import { loadState, saveState } from './localStorage'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  // We can also purge storage on write item fail
-  // writeFailHandler: () => {
-  //   getPersistor().purge()
-  // }
-}
-
-// We have to seperate persist reducer,
-// if we need control on partial state to do clear/rehydrate with like FIFO algo
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-
-let persistor
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware()
-  let store = createStore(
-    persistedReducer,
+  // With localStorage, the state will persisted after refreshing the web page.
+  const persistedState = loadState()
+  const store = createStore(
+    rootReducer,
+    persistedState,
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   )
-  persistor = persistStore(store)
+  
+  // In case of performance issue, because subscribe() calls
+  // every time the state has change and saveState() use JOSN.stringify() which
+  // is a expensive operation.
+  // So using lodash/throttle to make sure only 1 function calling per second.
+  store.subscribe(
+    throttle(() => {
+      // Save all the state to localStorage.
+      // saveState(store.getState())
+      // Save only data state like `todos` but not ui state like `visibilityFilter`.
+      saveState({
+        state: {
+          videoListReducer: store.getState().videoListReducer
+        }
+      })
+    }, '1000')
+  )
+
   // Run the saga
   sagaMiddleware.run(rootSaga)
 
-  return { store, persistor }
-}
-
-export function getPersistor() {
-  return persistor
+  return store
 }
 
 export default configureStore

@@ -1,10 +1,8 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects'
 import axios from 'axios'
 
-import { getPersistor } from '../configureStore'
 import { REQUEST_SEARCH_VIDEO, loadData, clearData } from '../actions'
 
-const persistor = getPersistor()
 const REACT_APP_GAPI_KEY = process.env.REACT_APP_GAPI_KEY
 
 // Example response

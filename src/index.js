@@ -22,19 +22,16 @@ import 'core-js/stable/date/now'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
 import registerServiceWorker from './registerServiceWorker'
 import configureStore from './configureStore'
 
-const { store, persistor } = configureStore()
+const store = configureStore()
 const App = React.lazy(() => import('./components/App'))
 
 ReactDOM.render(
   <Provider store={store}>
     <Suspense fallback={<div>Loading...</div>}>
-      <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
-        <App/>
-      </PersistGate>
+      <App/>
     </Suspense>
   </Provider>,
   document.getElementById('root')
