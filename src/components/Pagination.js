@@ -68,7 +68,8 @@ export default function VideoListPagination({
             onClick = item.onClick;
             item.disabled = !isSelected &&
               page !== currentPageNumber - 1 &&
-              page !== currentPageNumber + 1;
+              page !== currentPageNumber + 1 &&
+              !allVideoList[page];
             item.onClick = () => {
               onClick();
               if (isSelected) {
