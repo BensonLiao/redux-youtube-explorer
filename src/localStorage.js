@@ -1,4 +1,4 @@
-export const loadState = () => {
+export const loadState = ({withKey = false}) => {
   let state
   try {
     Object.keys(localStorage).forEach(key => {
@@ -6,7 +6,10 @@ export const loadState = () => {
       if (serializedState === null) {
         return undefined
       }
-      state = {
+      state = withKey ? {
+        [key]: JSON.parse(serializedState),
+        ...state
+      } : {
         ...JSON.parse(serializedState),
         ...state
       }
