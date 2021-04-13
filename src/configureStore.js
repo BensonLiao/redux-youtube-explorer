@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import { loadState, saveState } from './localStorage'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
+import videoListReducer from './reducers/videoList'
 import rootSaga from './sagas'
 import { getVideoListAll, getCurrentPage } from './reducers/selector'
 
@@ -25,7 +26,20 @@ const observeStore = (store, selector, onChange) => {
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware()
   // With localStorage, the state will persisted after refreshing the web page.
-  const persistedState = loadState({withKey: true})
+  const persistedState = {
+    videoListReducer: {
+      pageInfo: {
+        nextPageToken: null,
+        prevPageToken: null,
+        pageInfo: {}
+      },
+      allVideos: {
+        pageItems: loadState({withKey: true}), 
+        currentPage: 0, 
+        isFetching: false 
+      }
+    }
+  }
   const store = createStore(
     rootReducer,
     persistedState,

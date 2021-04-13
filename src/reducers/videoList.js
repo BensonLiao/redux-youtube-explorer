@@ -7,12 +7,26 @@ import {
   CLEAR_DATA
 } from '../actions'
 
-const loadVideos = (draft, action) => {
+const videoItemsReducer = produce((draft, action) => {
   const {
     type,
     payload: { page, items }
   } = action
-  draft.pageItems[page] = items
+  switch (type) {
+    case REQUEST_LODA_DATA:
+    case LOAD_DATA:
+      draft = {[page]: items}
+      break
+    default:
+  }
+}, {0: []})
+
+const loadVideos = (draft, action) => {
+  const {
+    type,
+    payload: { page }
+  } = action
+  draft.pageItems = videoItemsReducer(draft, action)
   draft.currentPage = page
   switch (type) {
     case REQUEST_LODA_DATA:
