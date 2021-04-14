@@ -5,12 +5,12 @@ import {
   REQUEST_SEARCH_VIDEO,
   REQUEST_LODA_DATA,
   LOAD_DATA,
-  CLEAR_DATA
+  CLEAR_PAGE_DATA
 } from '../actions'
 
 const pageItems = produce((draft, action) => {
   switch (action.type) {
-    case CLEAR_DATA:
+    case CLEAR_PAGE_DATA:
       delete draft[action.payload.page]
       break
     case REQUEST_LODA_DATA:
@@ -26,8 +26,6 @@ const pageItems = produce((draft, action) => {
 
 const currentPage = (state = 0, action) => {
   switch (action.type) {
-    case CLEAR_DATA:
-      return 0
     case CHANGE_TO_PAGE:
     case LOAD_DATA:
       const {
@@ -52,9 +50,6 @@ const isFetching = (state = false, action) => {
 
 const pageInfo = produce((draft, action) => {
   switch (action.type) {
-    case CLEAR_DATA:
-      draft = action.payload
-      break
     case LOAD_DATA:
       const {
         payload: { nextPageToken, prevPageToken, pageInfo }

@@ -1,6 +1,11 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
-import { loadState, loadStateInKeys, saveState } from './localStorage'
+import {
+  loadState,
+  loadStateInKeys,
+  saveState,
+  clearState
+} from './localStorage'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
@@ -9,6 +14,8 @@ import {
   getCurrentPage,
   getVideoListPageInfo
 } from './reducers/selector'
+import {clearPageData} from './actions'
+import {MAX_STORAGE_PAGES} from './constants'
 
 const observeStore = (store, selector, onChange) => {
   let currentState
@@ -24,6 +31,8 @@ const observeStore = (store, selector, onChange) => {
   let unsubscribe = store.subscribe(handleChange)
   return unsubscribe
 }
+
+const storedPageQueue = new Array()
 
 const configureStore = () => {
   // With localStorage, the state will persisted after refreshing the web page.
@@ -64,11 +73,17 @@ const configureStore = () => {
     const allState = store.getState()
     const page = getCurrentPage(allState)
     const pageData = state[page]
+    if (storedPageQueue.length >= MAX_STORAGE_PAGES) {
+      const clearPage = storedPageQueue.shift()
+      store.dispatch(clearPageData(clearPage))
+      clearState(clearPage)
+    }
     if (pageData) {
       saveState({
         key: page,
         state: pageData
       })
+      storedPageQueue.push(page)
     }
   })
 
