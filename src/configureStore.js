@@ -22,7 +22,6 @@ const observeStore = (store, selector, onChange) => {
   }
 
   let unsubscribe = store.subscribe(handleChange)
-  handleChange()
   return unsubscribe
 }
 
