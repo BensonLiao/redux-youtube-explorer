@@ -5,7 +5,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
 import {
-  getVideoListAll,
+  getVideoListByPage,
   getCurrentPage,
   getVideoListPageInfo
 } from './reducers/selector'
@@ -61,18 +61,17 @@ const configureStore = () => {
   // Run the saga
   sagaMiddleware.run(rootSaga)
 
-  observeStore(store, getVideoListAll, state => {
+  observeStore(store, getCurrentPage, state => {
     const allState = store.getState()
-    const page = getCurrentPage(allState)
-    const pageData = state[page]
-    if (page) {
+    const pageData = getVideoListByPage(allState, state)
+    if (state) {
       saveState({
         key: 'currentPage',
-        state: page
+        state
       })
       if (pageData) {
         saveState({
-          key: page,
+          key: state,
           state: pageData
         })
       }
