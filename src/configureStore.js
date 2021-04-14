@@ -4,7 +4,11 @@ import { loadState, loadStateInKeys, saveState } from './localStorage'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
-import { getVideoListAll, getCurrentPage } from './reducers/selector'
+import {
+  getVideoListAll,
+  getCurrentPage,
+  getVideoListPageInfo
+} from './reducers/selector'
 
 const observeStore = (store, selector, onChange) => {
   let currentState
@@ -72,6 +76,15 @@ const configureStore = () => {
           state: pageData
         })
       }
+    }
+  })
+
+  observeStore(store, getVideoListPageInfo, state => {
+    if (state) {
+      saveState({
+        key: 'pageInfo',
+        state
+      })
     }
   })
 
