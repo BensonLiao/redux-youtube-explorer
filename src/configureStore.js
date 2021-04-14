@@ -12,6 +12,7 @@ import rootSaga from './sagas'
 import {
   getVideoListAll,
   getCurrentPage,
+  getKeyword,
   getVideoListPageInfo
 } from './reducers/selector'
 import {clearPageData} from './actions'
@@ -91,6 +92,15 @@ const configureStore = () => {
     if (state) {
       saveState({
         key: 'currentPage',
+        state
+      })
+    }
+  })
+
+  observeStore(store, getKeyword, state => {
+    if (state) {
+      saveState({
+        key: 'keyword',
         state
       })
     }

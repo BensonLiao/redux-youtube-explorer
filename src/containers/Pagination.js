@@ -1,11 +1,17 @@
 import { connect } from 'react-redux'
-import { getCurrentPage, getVideoListPageInfo, getVideoListAll } from '../reducers/selector'
+import {
+  getKeyword,
+  getCurrentPage,
+  getVideoListPageInfo, 
+  getVideoListAll
+} from '../reducers/selector'
 import { changeToPage, requestSearchVideo } from '../actions'
 import Pagination from '../components/Pagination'
 
 const mapStateToProps = (state) => {
   return {
     ...getVideoListPageInfo(state),
+    keyword: getKeyword(state),
     currentPageNumber: getCurrentPage(state),
     allVideoList: getVideoListAll(state)
   }

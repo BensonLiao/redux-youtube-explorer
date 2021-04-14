@@ -43,6 +43,7 @@ export default function VideoListPagination({
     totalResults,
     resultsPerPage
   },
+  keyword,
   currentPageNumber,
   allVideoList,
   searchVideo,
@@ -77,7 +78,7 @@ export default function VideoListPagination({
               }
               if (!allVideoList[page]) {
                 searchVideo(
-                  keywordInputRef.current.firstChild.value,
+                  keyword || keywordInputRef.current.firstChild.value,
                   page,
                   page === currentPageNumber + 1 ? nextPageToken : prevPageToken
                 );
@@ -105,7 +106,7 @@ export default function VideoListPagination({
               onClick();
               if (!allVideoList[currentPageNumber + 1]) {
                 searchVideo(
-                  keywordInputRef.current.firstChild.value,
+                  keyword || keywordInputRef.current.firstChild.value,
                   currentPageNumber + 1,
                   nextPageToken
                 );
@@ -127,7 +128,7 @@ export default function VideoListPagination({
               onClick();
               if (!allVideoList[currentPageNumber - 1]) {
                 searchVideo(
-                  keywordInputRef.current.firstChild.value,
+                  keyword ||keywordInputRef.current.firstChild.value,
                   currentPageNumber - 1,
                   nextPageToken
                 );
@@ -157,6 +158,7 @@ VideoListPagination.propTypes = {
     resultsPerPage: PropTypes.number
   }),
   allVideoList: PropTypes.object,
+  keyword: PropTypes.string,
   currentPageNumber: PropTypes.number,
   searchVideo: PropTypes.func.isRequired
 }

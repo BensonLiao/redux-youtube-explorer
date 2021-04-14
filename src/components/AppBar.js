@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const keywordInputRef = React.createRef();
 
-export default function PrimarySearchAppBar({searchVideo}) {
+export default function PrimarySearchAppBar({keyword, searchVideo}) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -61,7 +62,7 @@ export default function PrimarySearchAppBar({searchVideo}) {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder={keyword || "Search…"}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -83,4 +84,9 @@ export default function PrimarySearchAppBar({searchVideo}) {
       </AppBar>
     </div>
   );
+}
+
+PrimarySearchAppBar.propTypes = {
+  keyword: PropTypes.string,
+  searchVideo: PropTypes.func.isRequired
 }

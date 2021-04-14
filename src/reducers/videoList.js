@@ -37,6 +37,18 @@ const currentPage = (state = 0, action) => {
   }
 }
 
+const keyword = (state = null, action) => {
+  switch (action.type) {
+    case LOAD_DATA:
+      const {
+        payload: { keyword }
+      } = action
+      return keyword
+    default:
+      return state
+  }
+}
+
 const isFetching = (state = false, action) => {
   switch (action.type) {
     case REQUEST_SEARCH_VIDEO:
@@ -65,6 +77,7 @@ const pageInfo = produce((draft, action) => {
 const videoListReducer = combineReducers({
   pageItems,
   currentPage,
+  keyword,
   isFetching,
   pageInfo
 })

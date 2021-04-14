@@ -62,6 +62,7 @@ export function* fetchVideoList({
     .get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=${keyword}${pageToken ? `&pageToken=${pageToken}` : ''}&key=${REACT_APP_GAPI_KEY}`)
     .then(response => response.data)
     .catch(err => console.log('A fetch err occurs: ', err))
+  result.keyword = keyword
   if (result && result.items.length > 0) {
     result.page = page
   }
