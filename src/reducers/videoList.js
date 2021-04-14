@@ -2,61 +2,53 @@ import produce from 'immer'
 import { combineReducers } from 'redux'
 import {
   CHANGE_TO_PAGE,
+  REQUEST_SEARCH_VIDEO,
   REQUEST_LODA_DATA,
   LOAD_DATA,
   CLEAR_DATA
 } from '../actions'
 
-const videoItemsReducer = produce((draft, action) => {
-  const {
-    type,
-    payload: { page, items }
-  } = action
-  switch (type) {
-    case REQUEST_LODA_DATA:
-    case LOAD_DATA:
-      draft = {[page]: items}
-      break
-    default:
-  }
-}, {0: []})
-
-const loadVideos = (draft, action) => {
-  const {
-    type,
-    payload: { page }
-  } = action
-  draft.pageItems = videoItemsReducer(draft, action)
-  draft.currentPage = page
-  switch (type) {
-    case REQUEST_LODA_DATA:
-      draft.isFetching = true
-      break
-    case LOAD_DATA:
-      draft.isFetching = false
-      break
-    default:
-  }
-}
-
-const allVideos = produce((draft, action) => {
+const pageItems = produce((draft, action) => {
   switch (action.type) {
     case CLEAR_DATA:
-      draft = action.payload
+      delete draft[action.payload.page]
       break
+    case REQUEST_LODA_DATA:
+    case LOAD_DATA:
+      const {
+        payload: { page, items }
+      } = action
+      draft[page] = items
+      break
+    default:
+  }
+}, {})
+
+const currentPage = (state = 0, action) => {
+  switch (action.type) {
+    case CLEAR_DATA:
+      return 0
     case CHANGE_TO_PAGE:
+    case LOAD_DATA:
       const {
         payload: { page }
       } = action
-      draft.currentPage = page
-      break
-    case REQUEST_LODA_DATA:
-    case LOAD_DATA:
-      loadVideos(draft, action)
-      break
+      return page
     default:
+      return state
   }
-}, { pageItems: {0: []}, currentPage: 0, isFetching: false })
+}
+
+const isFetching = (state = false, action) => {
+  switch (action.type) {
+    case REQUEST_SEARCH_VIDEO:
+      return true
+    case LOAD_DATA:
+      return false
+    default:
+      return state
+  }
+}
 
 const pageInfo = produce((draft, action) => {
   switch (action.type) {
@@ -76,7 +68,9 @@ const pageInfo = produce((draft, action) => {
 }, { nextPageToken: null, prevPageToken: null, pageInfo: {} })
 
 const videoListReducer = combineReducers({
-  allVideos,
+  pageItems,
+  currentPage,
+  isFetching,
   pageInfo
 })
 

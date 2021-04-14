@@ -1,18 +1,45 @@
-export const loadState = ({withKey = false}) => {
+export const loadState = ({exceptKeys = null, withKey = false}) => {
   let state
   try {
-    Object.keys(localStorage).forEach(key => {
-      const serializedState = localStorage.getItem(key)
-      if (serializedState === null) {
-        return undefined
-      }
-      state = withKey ? {
-        [key]: JSON.parse(serializedState),
-        ...state
-      } : {
-        ...JSON.parse(serializedState),
-        ...state
-      }
+    Object.keys(localStorage)
+      .filter(key => !key.match(exceptKeys))
+      .forEach(key => {
+        const serializedState = localStorage.getItem(key)
+        if (serializedState === null) {
+          return undefined
+        }
+        state = withKey ? {
+          [key]: JSON.parse(serializedState),
+          ...state
+        } : {
+          ...JSON.parse(serializedState),
+          ...state
+        }
+    })
+    return state
+  }
+  catch (err) {
+    return `An error occurs when loading state: ${err}`
+  }
+}
+
+export const loadStateInKeys = ({keys = null, withKey = false}) => {
+  let state
+  try {
+    Object.keys(localStorage)
+      .filter(key => key.match(keys))
+      .forEach(key => {
+        const serializedState = localStorage.getItem(key)
+        if (serializedState === null) {
+          return undefined
+        }
+        state = withKey ? {
+          [key]: JSON.parse(serializedState),
+          ...state
+        } : {
+          ...JSON.parse(serializedState),
+          ...state
+        }
     })
     return state
   }

@@ -1,45 +1,36 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
-import { loadState, saveState } from './localStorage'
+import { loadState, loadStateInKeys, saveState } from './localStorage'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
-import videoListReducer from './reducers/videoList'
 import rootSaga from './sagas'
 import { getVideoListAll, getCurrentPage } from './reducers/selector'
 
 const observeStore = (store, selector, onChange) => {
-  let currentState;
+  let currentState
 
   function handleChange() {
-    let nextState = selector(store.getState());
+    let nextState = selector(store.getState())
     if (nextState !== currentState) {
-      currentState = nextState;
-      onChange(currentState);
+      currentState = nextState
+      onChange(currentState)
     }
   }
 
-  let unsubscribe = store.subscribe(handleChange);
-  handleChange();
-  return unsubscribe;
+  let unsubscribe = store.subscribe(handleChange)
+  handleChange()
+  return unsubscribe
 }
 
 const configureStore = () => {
-  const sagaMiddleware = createSagaMiddleware()
   // With localStorage, the state will persisted after refreshing the web page.
-  const persistedState = {
-    videoListReducer: {
-      pageInfo: {
-        nextPageToken: null,
-        prevPageToken: null,
-        pageInfo: {}
-      },
-      allVideos: {
-        pageItems: loadState({withKey: true}), 
-        currentPage: 0, 
-        isFetching: false 
-      }
-    }
+  const persistedState = rootReducer({}, {})
+  persistedState.videoListReducer = {
+    ...persistedState.videoListReducer,
+    ...loadState({exceptKeys: /\d/, withKey: true}),
+    pageItems: loadStateInKeys({keys: /\d/, withKey: true})
   }
+  const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
     rootReducer,
     persistedState,
@@ -70,10 +61,18 @@ const configureStore = () => {
     const allState = store.getState()
     const page = getCurrentPage(allState)
     const pageData = state[page]
-    saveState({
-      key: page,
-      state: pageData
-    })
+    if (page) {
+      saveState({
+        key: 'currentPage',
+        state: page
+      })
+      if (pageData) {
+        saveState({
+          key: page,
+          state: pageData
+        })
+      }
+    }
   })
 
   return store

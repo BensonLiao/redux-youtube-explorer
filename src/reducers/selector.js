@@ -1,11 +1,11 @@
 // Videos of search result
 export const getVideoListIsFetching = state =>
-  state.videoListReducer.allVideos.isFetching
+  state.videoListReducer.isFetching
 export const getCurrentPage = state =>
-  state.videoListReducer.allVideos.currentPage
+  state.videoListReducer.currentPage
 export const getVideoListByPage = (state, page) =>
-  state.videoListReducer.allVideos.pageItems[page]
+  state.videoListReducer.pageItems[page]
 export const getVideoListAll = state =>
-  state.videoListReducer.allVideos.pageItems
+  state.videoListReducer.pageItems
 export const getVideoListPageInfo = state =>
   state.videoListReducer.pageInfo
