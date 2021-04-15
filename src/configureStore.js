@@ -33,8 +33,6 @@ const observeStore = (store, selector, onChange) => {
   return unsubscribe
 }
 
-const storedPageQueue = new Array()
-
 const configureStore = () => {
   // With localStorage, the state will persisted after refreshing the web page.
   const persistedState = rootReducer({}, {})
@@ -49,6 +47,7 @@ const configureStore = () => {
     persistedState,
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   )
+  const persistedPageQueue =  Object.keys(getVideoListAll(store.getState()))
   
   // In case of performance issue, because subscribe() calls
   // every time the state has change and saveState() use JOSN.stringify() which
@@ -74,8 +73,8 @@ const configureStore = () => {
     const allState = store.getState()
     const page = getCurrentPage(allState)
     const pageData = state[page]
-    if (storedPageQueue.length >= MAX_STORAGE_PAGES) {
-      const clearPage = storedPageQueue.shift()
+    if (persistedPageQueue.length >= MAX_STORAGE_PAGES) {
+      const clearPage = persistedPageQueue.shift()
       store.dispatch(clearPageData(clearPage))
       clearState(clearPage)
     }
@@ -84,7 +83,7 @@ const configureStore = () => {
         key: page,
         state: pageData
       })
-      storedPageQueue.push(page)
+      persistedPageQueue.push(page)
     }
   })
 
