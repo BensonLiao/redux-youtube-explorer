@@ -4,44 +4,38 @@ const REQUEST_LODA_DATA = 'REQUEST_LODA_DATA'
 const LOAD_DATA = 'LOAD_DATA'
 const CLEAR_DATA = 'CLEAR_DATA'
 
-const changeToPage = ({page}) => ({
+const changeToPage = ({ page }) => ({
   type: CHANGE_TO_PAGE,
   payload: {
-    page
-  }
+    page,
+  },
 })
 
-const requestSearchVideo = ({
-  keyword,
-  page,
-  pageToken,
-  ...queryParams
-}) => ({
+const requestSearchVideo = ({ keyword, page, pageToken, ...queryParams }) => ({
   type: REQUEST_SEARCH_VIDEO,
   payload: {
     keyword,
     page,
     pageToken,
-    ...queryParams
-  }
+    ...queryParams,
+  },
 })
-
 
 const requestLoadData = () => ({
   type: REQUEST_LODA_DATA,
   payload: {
-    items: []
-  }
+    items: [],
+  },
 })
 
-const loadData = (result) => ({
+const loadData = result => ({
   type: LOAD_DATA,
-  payload: result
+  payload: result,
 })
 
 const clearData = () => ({
   type: CLEAR_DATA,
-  payload: {}
+  payload: {},
 })
 
 export {
@@ -54,5 +48,5 @@ export {
   requestSearchVideo,
   requestLoadData,
   loadData,
-  clearData
+  clearData,
 }

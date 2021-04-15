@@ -1,11 +1,11 @@
-import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
+import React from 'react'
+import { fade, makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import InputBase from '@material-ui/core/InputBase'
+import SearchIcon from '@material-ui/icons/Search'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
   },
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
-    width: '100%'
+    width: '100%',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -46,12 +46,12 @@ const useStyles = makeStyles((theme) => ({
       width: '20ch',
     },
   },
-}));
+}))
 
-export const keywordInputRef = React.createRef();
+export const keywordInputRef = React.createRef()
 
-export default function PrimarySearchAppBar({searchVideo}) {
-  const classes = useStyles();
+export default function PrimarySearchAppBar({ searchVideo }) {
+  const classes = useStyles()
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
@@ -70,7 +70,7 @@ export default function PrimarySearchAppBar({searchVideo}) {
               ref={keywordInputRef}
               onKeyDown={event => {
                 if (
-                  !event.nativeEvent.isComposing && 
+                  !event.nativeEvent.isComposing &&
                   event.key === 'Enter' &&
                   keywordInputRef.current
                 ) {
@@ -82,5 +82,5 @@ export default function PrimarySearchAppBar({searchVideo}) {
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }
