@@ -8,6 +8,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { usePagination } from '@material-ui/lab/Pagination';
 
 import { keywordInputRef } from './AppBar';
+import { MAX_STORAGE_PAGES } from '../constants'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -52,6 +53,7 @@ export default function VideoListPagination({
   const pageCount = Math.ceil(totalResults / resultsPerPage)
   const { items } = usePagination({
     count: pageCount,
+    boundaryCount: 8
   });
   const classes = useStyles();
   return (
@@ -60,17 +62,36 @@ export default function VideoListPagination({
         {pageCount > 0 && items.map(({ page, type, selected, ...item }, index) => {
           let onClick = null;
           let children = null;
-          if (type === 'start-ellipsis' || type === 'end-ellipsis') {
+          if (
+            currentPageNumber > MAX_STORAGE_PAGES &&
+            (type === 'start-ellipsis' ||
+            type === 'end-ellipsis')
+          ) {
             children = '…';
           }
           
           if (type === 'page') {
-            const isSelected = currentPageNumber === page;
-            onClick = item.onClick;
-            item.disabled = !isSelected &&
+            if (
+              currentPageNumber < MAX_STORAGE_PAGES &&
+              page !== currentPageNumber &&
+              page !== currentPageNumber - 1 &&
+              page !== currentPageNumber + 1
+            ) {
+              children = null;
+              return;
+            }
+            if (
+              currentPageNumber >= MAX_STORAGE_PAGES &&
+              page !== currentPageNumber &&
               page !== currentPageNumber - 1 &&
               page !== currentPageNumber + 1 &&
-              !allVideoList[page];
+              !allVideoList[page]
+            ) {
+              children = null;
+              return;
+            }
+            const isSelected = currentPageNumber === page;
+            onClick = item.onClick;
             item.onClick = () => {
               onClick();
               if (isSelected) {
