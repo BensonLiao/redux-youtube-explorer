@@ -8,7 +8,7 @@ import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
 import { usePagination } from '@material-ui/lab/Pagination';
 
 import { keywordInputRef } from './AppBar';
-import { MAX_STORAGE_PAGES } from '../constants'
+import { FIRST_SECTION_PAGES } from '../constants'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -63,7 +63,7 @@ export default function VideoListPagination({
           let onClick = null;
           let children = null;
           if (
-            currentPageNumber > MAX_STORAGE_PAGES &&
+            currentPageNumber > FIRST_SECTION_PAGES &&
             (type === 'start-ellipsis' ||
             type === 'end-ellipsis')
           ) {
@@ -72,7 +72,7 @@ export default function VideoListPagination({
           
           if (type === 'page') {
             if (
-              currentPageNumber < MAX_STORAGE_PAGES &&
+              currentPageNumber < FIRST_SECTION_PAGES &&
               page !== currentPageNumber &&
               page !== currentPageNumber - 1 &&
               page !== currentPageNumber + 1
@@ -81,7 +81,7 @@ export default function VideoListPagination({
               return;
             }
             if (
-              currentPageNumber >= MAX_STORAGE_PAGES &&
+              currentPageNumber >= FIRST_SECTION_PAGES &&
               page !== currentPageNumber &&
               page !== currentPageNumber - 1 &&
               page !== currentPageNumber + 1 &&
