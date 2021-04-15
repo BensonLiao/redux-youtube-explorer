@@ -1,4 +1,4 @@
-export const loadState = ({exceptKeys = null, withKey = false}) => {
+export const loadState = ({ exceptKeys = null, withKey = false }) => {
   let state
   try {
     Object.keys(localStorage)
@@ -8,22 +8,23 @@ export const loadState = ({exceptKeys = null, withKey = false}) => {
         if (serializedState === null) {
           return undefined
         }
-        state = withKey ? {
-          [key]: JSON.parse(serializedState),
-          ...state
-        } : {
-          ...JSON.parse(serializedState),
-          ...state
-        }
-    })
+        state = withKey
+          ? {
+              [key]: JSON.parse(serializedState),
+              ...state,
+            }
+          : {
+              ...JSON.parse(serializedState),
+              ...state,
+            }
+      })
     return state
-  }
-  catch (err) {
+  } catch (err) {
     return `An error occurs when loading state: ${err}`
   }
 }
 
-export const loadStateInKeys = ({keys = null, withKey = false}) => {
+export const loadStateInKeys = ({ keys = null, withKey = false }) => {
   let state
   try {
     Object.keys(localStorage)
@@ -33,27 +34,27 @@ export const loadStateInKeys = ({keys = null, withKey = false}) => {
         if (serializedState === null) {
           return undefined
         }
-        state = withKey ? {
-          [key]: JSON.parse(serializedState),
-          ...state
-        } : {
-          ...JSON.parse(serializedState),
-          ...state
-        }
-    })
+        state = withKey
+          ? {
+              [key]: JSON.parse(serializedState),
+              ...state,
+            }
+          : {
+              ...JSON.parse(serializedState),
+              ...state,
+            }
+      })
     return state
-  }
-  catch (err) {
+  } catch (err) {
     return `An error occurs when loading state: ${err}`
   }
 }
 
-export const saveState = ({key = 'root', state}) => {
+export const saveState = ({ key = 'root', state }) => {
   try {
     const serializedState = JSON.stringify(state)
     localStorage.setItem(key, serializedState)
-  }
-  catch (err) {
+  } catch (err) {
     return `An error occurs when saving state: ${err}`
   }
 }
@@ -61,8 +62,7 @@ export const saveState = ({key = 'root', state}) => {
 export const clearState = (key = 'root') => {
   try {
     localStorage.removeItem(key)
-  }
-  catch (err) {
+  } catch (err) {
     return `An error occurs when clearing state: ${err}`
   }
 }

@@ -2,31 +2,27 @@ import { connect } from 'react-redux'
 import {
   getKeyword,
   getCurrentPage,
-  getVideoListPageInfo, 
-  getVideoListAll
+  getVideoListPageInfo,
+  getVideoListAll,
 } from '../reducers/selector'
 import { changeToPage, requestSearchVideo } from '../actions'
 import Pagination from '../components/Pagination'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     ...getVideoListPageInfo(state),
     keyword: getKeyword(state),
     currentPageNumber: getCurrentPage(state),
-    allVideoList: getVideoListAll(state)
+    allVideoList: getVideoListAll(state),
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   searchVideo: (keyword, page, pageToken) => {
-    dispatch(changeToPage({page}))
-    dispatch(requestSearchVideo({keyword, page, pageToken}))
+    dispatch(changeToPage({ page }))
+    dispatch(requestSearchVideo({ keyword, page, pageToken }))
   },
-  changeToPage: (page) =>
-    dispatch(changeToPage({page}))
+  changeToPage: page => dispatch(changeToPage({ page })),
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Pagination)
+export default connect(mapStateToProps, mapDispatchToProps)(Pagination)

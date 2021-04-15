@@ -56,10 +56,18 @@ const REACT_APP_GAPI_KEY = process.env.REACT_APP_GAPI_KEY
 export function* fetchVideoList({
   keyword = 'surfing',
   page = 1,
-  pageToken = null
+  pageToken = null,
 }) {
   const result = yield axios
-    .get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=24&q=${keyword}${pageToken ? `&pageToken=${pageToken}` : ''}&key=${REACT_APP_GAPI_KEY}`)
+    .get(
+      `https://youtube.googleapis.com/youtube/v3/search?
+      part=snippet
+      &type=video
+      &maxResults=24
+      &q=${keyword}
+      ${pageToken ? `&pageToken=${pageToken}` : ''}
+      &key=${REACT_APP_GAPI_KEY}`
+    )
     .then(response => response.data)
     .catch(err => console.log('A fetch err occurs: ', err))
   result.keyword = keyword

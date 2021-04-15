@@ -5,7 +5,7 @@ import {
   REQUEST_SEARCH_VIDEO,
   REQUEST_LODA_DATA,
   LOAD_DATA,
-  CLEAR_PAGE_DATA
+  CLEAR_PAGE_DATA,
 } from '../actions'
 
 const pageItems = produce((draft, action) => {
@@ -16,7 +16,7 @@ const pageItems = produce((draft, action) => {
     case REQUEST_LODA_DATA:
     case LOAD_DATA:
       const {
-        payload: { page, items }
+        payload: { page, items },
       } = action
       draft[page] = items
       break
@@ -29,7 +29,7 @@ const currentPage = (state = 0, action) => {
     case CHANGE_TO_PAGE:
     case LOAD_DATA:
       const {
-        payload: { page }
+        payload: { page },
       } = action
       return page
     default:
@@ -41,7 +41,7 @@ const keyword = (state = null, action) => {
   switch (action.type) {
     case LOAD_DATA:
       const {
-        payload: { keyword }
+        payload: { keyword },
       } = action
       return keyword
     default:
@@ -60,26 +60,29 @@ const isFetching = (state = false, action) => {
   }
 }
 
-const pageInfo = produce((draft, action) => {
-  switch (action.type) {
-    case LOAD_DATA:
-      const {
-        payload: { nextPageToken, prevPageToken, pageInfo }
-      } = action
-      draft.nextPageToken = nextPageToken
-      draft.prevPageToken = prevPageToken
-      draft.pageInfo = pageInfo
-      break
-    default:
-  }
-}, { nextPageToken: null, prevPageToken: null, pageInfo: {} })
+const pageInfo = produce(
+  (draft, action) => {
+    switch (action.type) {
+      case LOAD_DATA:
+        const {
+          payload: { nextPageToken, prevPageToken, pageInfo },
+        } = action
+        draft.nextPageToken = nextPageToken
+        draft.prevPageToken = prevPageToken
+        draft.pageInfo = pageInfo
+        break
+      default:
+    }
+  },
+  { nextPageToken: null, prevPageToken: null, pageInfo: {} }
+)
 
 const videoListReducer = combineReducers({
   pageItems,
   currentPage,
   keyword,
   isFetching,
-  pageInfo
+  pageInfo,
 })
 
 export default videoListReducer

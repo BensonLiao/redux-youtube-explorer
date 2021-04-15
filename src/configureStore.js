@@ -4,7 +4,7 @@ import {
   loadState,
   loadStateInKeys,
   saveState,
-  clearState
+  clearState,
 } from './localStorage'
 import createSagaMiddleware from 'redux-saga'
 import rootReducer from './reducers'
@@ -13,10 +13,10 @@ import {
   getVideoListAll,
   getCurrentPage,
   getKeyword,
-  getVideoListPageInfo
+  getVideoListPageInfo,
 } from './reducers/selector'
-import {clearPageData} from './actions'
-import {MAX_STORAGE_PAGES} from './constants'
+import { clearPageData } from './actions'
+import { MAX_STORAGE_PAGES } from './constants'
 
 const observeStore = (store, selector, onChange) => {
   let currentState
@@ -38,8 +38,8 @@ const configureStore = () => {
   const persistedState = rootReducer({}, {})
   persistedState.videoListReducer = {
     ...persistedState.videoListReducer,
-    ...loadState({exceptKeys: /\d/, withKey: true}),
-    pageItems: loadStateInKeys({keys: /\d/, withKey: true})
+    ...loadState({ exceptKeys: /\d/, withKey: true }),
+    pageItems: loadStateInKeys({ keys: /\d/, withKey: true }),
   }
   const sagaMiddleware = createSagaMiddleware()
   const store = createStore(
@@ -47,8 +47,8 @@ const configureStore = () => {
     persistedState,
     composeWithDevTools(applyMiddleware(sagaMiddleware))
   )
-  const persistedPageQueue =  Object.keys(getVideoListAll(store.getState()))
-  
+  const persistedPageQueue = Object.keys(getVideoListAll(store.getState()))
+
   // In case of performance issue, because subscribe() calls
   // every time the state has change and saveState() use JOSN.stringify() which
   // is a expensive operation.
@@ -81,7 +81,7 @@ const configureStore = () => {
     if (pageData) {
       saveState({
         key: page,
-        state: pageData
+        state: pageData,
       })
       persistedPageQueue.push(page)
     }
@@ -91,7 +91,7 @@ const configureStore = () => {
     if (state) {
       saveState({
         key: 'currentPage',
-        state
+        state,
       })
     }
   })
@@ -100,7 +100,7 @@ const configureStore = () => {
     if (state) {
       saveState({
         key: 'keyword',
-        state
+        state,
       })
     }
   })
@@ -109,7 +109,7 @@ const configureStore = () => {
     if (state) {
       saveState({
         key: 'pageInfo',
-        state
+        state,
       })
     }
   })

@@ -29,9 +29,9 @@ const App = () => {
   return (
     <Root>
       <GlobalStyle />
-      <AppBar/>
-      <VideoGridList/>
-      <Pagination/>
+      <AppBar />
+      <VideoGridList />
+      <Pagination />
     </Root>
   )
 }
@@ -42,43 +42,45 @@ App.propTypes = {
     prevPageToken: PropTypes.string,
     pageInfo: PropTypes.shape({
       totalResults: PropTypes.number,
-      resultsPerPage: PropTypes.number
+      resultsPerPage: PropTypes.number,
     }),
-    items: PropTypes.arrayOf(PropTypes.shape({
-      kind: PropTypes.string,
-      etag: PropTypes.string,
-      id: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
         kind: PropTypes.string,
-        videoId: PropTypes.string
-      }),
-      snippet: PropTypes.shape({
-        publishedAt: PropTypes.string,
-        channelId: PropTypes.string,
-        title: PropTypes.string,
-        description: PropTypes.string,
-        thumbnails: PropTypes.shape({
-          default: PropTypes.shape({
-            url: PropTypes.string,
-            width: PropTypes.number,
-            height: PropTypes.number
-          }),
-          medium: PropTypes.shape({
-            url: PropTypes.string,
-            width: PropTypes.number,
-            height: PropTypes.number
-          }),
-          high: PropTypes.shape({
-            url: PropTypes.string,
-            width: PropTypes.number,
-            height: PropTypes.number
-          })
+        etag: PropTypes.string,
+        id: PropTypes.shape({
+          kind: PropTypes.string,
+          videoId: PropTypes.string,
         }),
-        channelTitle: PropTypes.string,
-        liveBroadcastContent: PropTypes.string,
-        publishTime: PropTypes.string
+        snippet: PropTypes.shape({
+          publishedAt: PropTypes.string,
+          channelId: PropTypes.string,
+          title: PropTypes.string,
+          description: PropTypes.string,
+          thumbnails: PropTypes.shape({
+            default: PropTypes.shape({
+              url: PropTypes.string,
+              width: PropTypes.number,
+              height: PropTypes.number,
+            }),
+            medium: PropTypes.shape({
+              url: PropTypes.string,
+              width: PropTypes.number,
+              height: PropTypes.number,
+            }),
+            high: PropTypes.shape({
+              url: PropTypes.string,
+              width: PropTypes.number,
+              height: PropTypes.number,
+            }),
+          }),
+          channelTitle: PropTypes.string,
+          liveBroadcastContent: PropTypes.string,
+          publishTime: PropTypes.string,
+        }),
       })
-    }))
-  })
+    ),
+  }),
 }
 
 export default App
